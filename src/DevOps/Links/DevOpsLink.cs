@@ -5,7 +5,7 @@ using System.Diagnostics;
 namespace Markdig.Extensions.DevOps.Links
 {
     [DebuggerDisplay("#{" + nameof(IssueNumber) + "}")]
-    public class DevOpsLink : LinkInline
+    public class DevOpsLink : LeafInline
     {
         public StringSlice IssueNumber { get; set; }
     }

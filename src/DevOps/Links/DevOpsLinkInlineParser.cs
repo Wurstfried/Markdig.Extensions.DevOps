@@ -5,7 +5,6 @@
 
 using Markdig.Helpers;
 using Markdig.Parsers;
-using Markdig.Syntax;
 
 namespace Markdig.Extensions.DevOps.Links
 {
@@ -19,10 +18,7 @@ namespace Markdig.Extensions.DevOps.Links
             '#'
         };
 
-        public DevOpsLinkInlineParser()
-        {
-            OpeningCharacters = _openingCharacters;
-        }
+        public DevOpsLinkInlineParser() => OpeningCharacters = _openingCharacters;
 
         public override bool Match(InlineProcessor processor, ref StringSlice slice)
         {
@@ -50,13 +46,13 @@ namespace Markdig.Extensions.DevOps.Links
                     processor.Inline = new DevOpsLink
                     {
                         Span =
-                              {
-                                Start = inlineStart,
-                                End = inlineStart + (end - start) + 1
-                              },
+                        {
+                            Start = inlineStart,
+                            End = inlineStart + (end - start) + 1
+                        },
                         Line = line,
                         Column = column,
-                        Url = new StringSlice(slice.Text, start, end).ToString()
+                        IssueNumber = new StringSlice(slice.Text, start, end)
                     };
 
                     matchFound = true;

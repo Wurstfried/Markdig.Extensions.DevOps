@@ -1,19 +1,17 @@
 ﻿using Markdig.Extensions.DevOps.Headings;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Utilities;
 using Xunit;
 
 namespace Markdig.Extensions.DevOps.Links.Tests
 {
     public class DevOpsLinksShould
     {
-        private MarkdownPipeline _pipeline;
+        private readonly MarkdownPipeline _pipeline;
 
         public DevOpsLinksShould()
         {
-            var pipelineBuilder = new MarkdownPipelineBuilder();
-            _pipeline = MarkdownExtensions.Use<DevOpsLinksExtension>(pipelineBuilder)
-                                          .Use<DevOpsHeadingsExtension>()
-                                          .Build();
+            _pipeline = new MarkdownPipelineBuilder().Use(new DevOpsLinksExtension(new DevOpsLinkOptions("https://dev.azure.com/org/prj")))
+                                                     .Use<DevOpsHeadingsExtension>()
+                                                     .Build();
         }
 
         [Fact]
