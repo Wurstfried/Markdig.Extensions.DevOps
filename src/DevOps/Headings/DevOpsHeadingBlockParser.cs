@@ -57,7 +57,7 @@ namespace Markdig.Extensions.DevOps.Headings
             if (leadingCount > 0 && leadingCount <= MaxLeadingCount)
             {
                 Regex re = new Regex(@"^\d+$");
-                if (re.IsMatch(line.ToString()))
+                if (leadingCount == 1 && re.IsMatch(line.ToString()))
                     return BlockState.None;
 
                 // Move to the content

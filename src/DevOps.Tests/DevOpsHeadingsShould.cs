@@ -4,7 +4,7 @@ namespace Markdig.Extensions.DevOps.Headings.Tests
 {
     public class DevOpsHeadingsShould
     {
-        private MarkdownPipeline _pipeline;
+        private readonly MarkdownPipeline _pipeline;
 
         public DevOpsHeadingsShould()
         {
@@ -66,6 +66,26 @@ namespace Markdig.Extensions.DevOps.Headings.Tests
 
             Assert.Contains("<h1>", html);
             Assert.Contains("<h2>", html);
+        }
+
+        [Fact]
+        public void ParseHorridNumberHeadings()
+        {
+            string sut = "##123\n";
+
+            string html = Markdown.ToHtml(sut, _pipeline);
+
+            Assert.Contains("<h2>", html);
+        }
+
+        [Fact]
+        public void NotParseLinks()
+        {
+            string sut = "#123\n";
+
+            string html = Markdown.ToHtml(sut, _pipeline);
+
+            Assert.DoesNotContain("<h1>", html);
         }
     }
 }
