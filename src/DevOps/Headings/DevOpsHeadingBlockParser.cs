@@ -56,6 +56,10 @@ namespace Markdig.Extensions.DevOps.Headings
             // A space is NOT required after leading #
             if (leadingCount > 0 && leadingCount <= MaxLeadingCount)
             {
+                Regex re = new Regex(@"^\d+$");
+                if (re.IsMatch(line.ToString()))
+                    return BlockState.None;
+
                 // Move to the content
                 var headingBlock = new HeadingBlock(this)
                 {

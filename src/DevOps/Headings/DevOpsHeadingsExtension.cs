@@ -4,37 +4,25 @@
 // See the LICENSE file in the project root for more information.
 
 using Markdig.Renderers;
+using System;
 
 namespace Markdig.Extensions.DevOps.Headings
 {
     /// <summary>
     /// Markdig extension for horrid headers in markdown. 
     /// </summary>
-    public class DevOpsIDsExtension : IMarkdownExtension
+    public class DevOpsHeadingsExtension : IMarkdownExtension
     {
-        /// <summary>
-        /// Sets up the extension to use the DevOpsHeading block parser
-        /// </summary>
-        /// <returns>The setup.</returns>
-        /// <param name="pipeline">Pipeline.</param>
         public void Setup(MarkdownPipelineBuilder pipeline)
         {
-            if (!pipeline.BlockParsers.Contains<DevOpsHeadingBlockParser>())
-            {
-                // Insert the parser before any other parsers
-                pipeline.BlockParsers.Insert(0, new DevOpsHeadingBlockParser());
-            }
+            var parsers = pipeline.BlockParsers;
+            if (!parsers.Contains<DevOpsHeadingBlockParser>())
+                parsers.Add(new DevOpsHeadingBlockParser());
         }
 
-        /// <summary>
-        /// Not needed
-        /// </summary>
-        /// <returns>The setup.</returns>
-        /// <param name="pipeline">Pipeline.</param>
-        /// <param name="renderer">Renderer.</param>
         public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
         {
-            // not required
+            //throw new NotImplementedException();
         }
     }
 }
