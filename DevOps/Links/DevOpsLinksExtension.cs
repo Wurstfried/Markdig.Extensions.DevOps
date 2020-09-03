@@ -1,10 +1,7 @@
-﻿
-// Copyright (c) Sebastian Raffel. All rights reserved.
+﻿// Copyright (c) Sebastian Raffel. All rights reserved.
 // This file is licensed under the BSD-Clause 2 license. 
 // See the LICENSE file in the project root for more information.
 
-using Markdig.Helpers;
-using Markdig.Parsers;
 using Markdig.Renderers;
 
 namespace Markdig.Extensions.DevOps.Links
@@ -16,15 +13,9 @@ namespace Markdig.Extensions.DevOps.Links
     {
         private readonly DevOpsLinkOptions _options;
 
-        public DevOpsLinksExtension()
-        {
-            _options = new DevOpsLinkOptions();
-        }
+        public DevOpsLinksExtension() => _options = new DevOpsLinkOptions();
 
-        public DevOpsLinksExtension(DevOpsLinkOptions options)
-        {
-            _options = options;
-        }
+        public DevOpsLinksExtension(DevOpsLinkOptions options) => _options = options;
 
         public void Setup(MarkdownPipelineBuilder pipeline)
         {

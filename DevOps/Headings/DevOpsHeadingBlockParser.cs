@@ -1,5 +1,4 @@
-﻿
-// Copyright (c) Sebastian Raffel. All rights reserved.
+﻿// Copyright (c) Sebastian Raffel. All rights reserved.
 // This file is licensed under the BSD-Clause 2 license. 
 // See the LICENSE file in the project root for more information.
 
@@ -21,9 +20,7 @@ namespace Markdig.Extensions.DevOps.Headings
         {
             // If we are in a CodeIndent, early exit
             if (processor.IsCodeIndent)
-            {
                 return BlockState.None;
-            }
 
             // DevOps headings
             // A DevOps heading consists of a string of characters, parsed as inline content, 
