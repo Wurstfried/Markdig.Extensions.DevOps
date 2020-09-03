@@ -1,3 +1,5 @@
+using Markdig;
+using Markdig.Extensions.DevOps.Links;
 using Xunit;
 
 namespace Markdig.Extensions.DevOps.Headings.Tests
@@ -8,9 +10,8 @@ namespace Markdig.Extensions.DevOps.Headings.Tests
 
         public DevOpsHeadingsShould()
         {
-            var pipelineBuilder = new MarkdownPipelineBuilder();
-            pipelineBuilder     = MarkdownExtensions.Use<DevOpsHeadingsExtension>(pipelineBuilder);
-            _pipeline           = pipelineBuilder.Build();
+            _pipeline = new MarkdownPipelineBuilder().UseDevOps(new DevOpsLinkOptions("https://dev.azure.com/org/prj"))
+                                                     .Build();
         }
 
         [Fact]
