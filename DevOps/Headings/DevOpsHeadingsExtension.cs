@@ -13,9 +13,7 @@ namespace Markdig.Extensions.DevOps.Headings
     {
         public void Setup(MarkdownPipelineBuilder pipeline)
         {
-            var parsers = pipeline.BlockParsers;
-            if (!parsers.Contains<DevOpsHeadingBlockParser>())
-                parsers.Add(new DevOpsHeadingBlockParser());
+            pipeline.BlockParsers.AddIfNotAlready(new DevOpsHeadingBlockParser());
         }
 
         public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)

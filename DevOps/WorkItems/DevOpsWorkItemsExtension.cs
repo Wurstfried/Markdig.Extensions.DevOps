@@ -26,9 +26,9 @@ namespace Markdig.Extensions.DevOps.WorkItems
         {
             HtmlRenderer htmlRenderer = renderer as HtmlRenderer;
             ObjectRendererCollection renderers = htmlRenderer?.ObjectRenderers;
+            if (renderers == null) return;
 
-            if (renderers != null && !renderers.Contains<DevOpsLinkRenderer>())
-                renderers.Add(new DevOpsLinkRenderer(_options));
+            renderers.AddIfNotAlready(new DevOpsLinkRenderer(_options));
         }
     }
 }

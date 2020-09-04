@@ -21,9 +21,7 @@ namespace Markdig
 
         public static MarkdownPipelineBuilder UseDevOpsLinks(this MarkdownPipelineBuilder pipeline, DevOpsLinkOptions options)
         {
-            if (!pipeline.Extensions.Contains<DevOpsWorkItemsExtension>())
-                pipeline.Extensions.Add(new DevOpsWorkItemsExtension(options));
-            
+            pipeline.Extensions.AddIfNotAlready(new DevOpsWorkItemsExtension(options));
             return pipeline;
         }
 
