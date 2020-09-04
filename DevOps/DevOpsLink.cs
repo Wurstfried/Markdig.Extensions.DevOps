@@ -6,10 +6,10 @@ using Markdig.Helpers;
 using Markdig.Syntax.Inlines;
 using System.Diagnostics;
 
-namespace Markdig.Extensions.DevOps.WorkItems
+namespace Markdig.Extensions.DevOps
 {
     [DebuggerDisplay("{" + nameof(Prefix) + nameof(IssueNumber) + "}")]
-    public class DevOpsWorkItem : LeafInline
+    public class DevOpsLink : LeafInline
     {
         public StringSlice IssueNumber { get; set; }
         public char Prefix { get; set; } = '#';

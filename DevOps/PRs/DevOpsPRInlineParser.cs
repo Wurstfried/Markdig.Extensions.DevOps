@@ -5,19 +5,19 @@
 using Markdig.Helpers;
 using Markdig.Parsers;
 
-namespace Markdig.Extensions.DevOps.WorkItems
+namespace Markdig.Extensions.DevOps.PRs
 {
     /// <summary>
     /// Inline parser for a <see cref="InlineParser"/>.
     /// </summary>
-    public class DevOpsWorkItemInlineParser : InlineParser
+    public class DevOpsPRInlineParser : InlineParser
     {
         private static readonly char[] _openingCharacters =
         {
-            '#'
+            '!'
         };
 
-        public DevOpsWorkItemInlineParser() => OpeningCharacters = _openingCharacters;
+        public DevOpsPRInlineParser() => OpeningCharacters = _openingCharacters;
 
         public override bool Match(InlineProcessor processor, ref StringSlice slice)
         {

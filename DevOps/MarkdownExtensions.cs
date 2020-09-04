@@ -4,6 +4,7 @@
 
 using Markdig.Extensions.DevOps;
 using Markdig.Extensions.DevOps.Headings;
+using Markdig.Extensions.DevOps.PRs;
 using Markdig.Extensions.DevOps.WorkItems;
 
 namespace Markdig
@@ -28,6 +29,12 @@ namespace Markdig
         public static MarkdownPipelineBuilder UseDevOpsHeadings(this MarkdownPipelineBuilder pipeline)
         {
             pipeline.Extensions.AddIfNotAlready<DevOpsHeadingsExtension>();
+            return pipeline;
+        }
+
+        public static MarkdownPipelineBuilder UseDevOpsPRs(this MarkdownPipelineBuilder pipeline)
+        {
+            pipeline.Extensions.AddIfNotAlready<DevOpsPRsExtension>();
             return pipeline;
         }
     }

@@ -63,6 +63,16 @@ namespace WorkItem_spec
         }
 
         [Theory]
+        [InlineData(@"\#1"             , "<a ")]
+        [InlineData(@" \#123 abc"      , "<a ")]
+        [InlineData(@"abc \#6543"      , "<a ")]
+        [InlineData(@"abc \#123 \n abc", "<a ")]
+        public void Escaped_workItems(string markdownText, string expected)
+        {
+            Assert.DoesNotContain(expected, Markdown.ToHtml(markdownText, _pipeline));
+        }
+
+        [Theory]
         [InlineData("`#123`"    , "<a ")]
         [InlineData("`#1` 23"   , "<a ")]
         [InlineData("12 `#34`"  , "<a ")]

@@ -9,13 +9,13 @@ using Markdig.Renderers.Html;
 
 namespace Markdig.Extensions.DevOps
 {
-    public class DevOpsLinkRenderer : HtmlObjectRenderer<DevOpsWorkItem>
+    public class DevOpsLinkRenderer : HtmlObjectRenderer<DevOpsLink>
     {
         private readonly DevOpsLinkOptions _options;
 
         public DevOpsLinkRenderer(DevOpsLinkOptions options) => _options = options;
 
-        protected override void Write(HtmlRenderer renderer, DevOpsWorkItem link)
+        protected override void Write(HtmlRenderer renderer, DevOpsLink link)
         {
             StringSlice issueNumber = link.IssueNumber;
 
