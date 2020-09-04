@@ -12,12 +12,12 @@ namespace Heading_spec
     {
         private readonly MarkdownPipeline _pipeline;
 
-        public Parses() => _pipeline = new MarkdownPipelineBuilder().UseDevOps(new DevOpsLinkOptions("https://dev.azure.com/org/prj")).Build();
+        public Parses() => _pipeline = new MarkdownPipelineBuilder().UseDevOpsHeadings().Build();
 
         [Theory]
-        [InlineData("# Title", "<h1>")]
-        [InlineData("## Title and blanks", "<h2>")]
-        [InlineData(" # Title ", "<h1>")]
+        [InlineData("# Title"                             , "<h1>")]
+        [InlineData("## Title and blanks"                 , "<h2>")]
+        [InlineData(" # Title "                           , "<h1>")]
         [InlineData("# Title\nBla *bla*\n## Another title", "<h1>")]
         public void ATX_headings(string markdownText, string expected)
         {
@@ -25,9 +25,9 @@ namespace Heading_spec
         }
 
         [Theory]
-        [InlineData("# Title #", "<h1>")]
-        [InlineData("## Title and blanks ####", "<h2>")]
-        [InlineData(" # Title #", "<h1>")]
+        [InlineData("# Title #"                              , "<h1>")]
+        [InlineData("## Title and blanks ####"               , "<h2>")]
+        [InlineData(" # Title #"                             , "<h1>")]
         [InlineData("# Title ##\nBla *bla*\n## Another title", "<h1>")]
         public void Wrapped_ATX_headings(string markdownText, string expected)
         {
@@ -35,9 +35,9 @@ namespace Heading_spec
         }
 
         [Theory]
-        [InlineData("#Title", "<h1>")]
-        [InlineData("##Title and blanks", "<h2>")]
-        [InlineData(" #Title", "<h1>")]
+        [InlineData("#Title"                             , "<h1>")]
+        [InlineData("##Title and blanks"                 , "<h2>")]
+        [InlineData(" #Title"                            , "<h1>")]
         [InlineData("# Title\nBla *bla*\n##Another title", "<h2>")]
         public void Horrid_headings(string markdownText, string expected)
         {
@@ -45,9 +45,9 @@ namespace Heading_spec
         }
 
         [Theory]
-        [InlineData("#Title #", "<h1>")]
-        [InlineData("##Title and blanks ####", "<h2>")]
-        [InlineData(" #Title #", "<h1>")]
+        [InlineData("#Title #"                             , "<h1>")]
+        [InlineData("##Title and blanks ####"              , "<h2>")]
+        [InlineData(" #Title #"                            , "<h1>")]
         [InlineData("#Title ##\nBla *bla*\n##Another title", "<h1>")]
         public void Wrapped_horrid_headings(string markdownText, string expected)
         {
@@ -55,9 +55,9 @@ namespace Heading_spec
         }
 
         [Theory]
-        [InlineData("#Title #\n## Title", "<h1>", "<h2>")]
-        [InlineData("##Title and blanks ####\n\n# Title", "<h1>", "<h2>")]
-        [InlineData(" #Title\n## Title2", "<h1>", "<h2>")]
+        [InlineData("#Title #\n## Title"                    , "<h1>", "<h2>")]
+        [InlineData("##Title and blanks ####\n\n# Title"    , "<h1>", "<h2>")]
+        [InlineData(" #Title\n## Title2"                    , "<h1>", "<h2>")]
         [InlineData("#Title ##\nBla *bla*\n## Another title", "<h1>", "<h2>")]
         public void Mixed_headings(string markdownText, string expected, string expected2)
         {
@@ -84,8 +84,8 @@ namespace Heading_spec
         public Does_not_parse() => _pipeline = new MarkdownPipelineBuilder().UseDevOps(new DevOpsLinkOptions("https://dev.azure.com/org/prj")).Build();
 
         [Theory]
-        [InlineData("#9", "<h1>")]
-        [InlineData("#123", "<h1>")]
+        [InlineData("#9"    , "<h1>")]
+        [InlineData("#123"  , "<h1>")]
         [InlineData("#12345", "<h1>")]
         [InlineData("#123\n", "<h1>")]
         public void WorkItems(string markdownText, string expected)

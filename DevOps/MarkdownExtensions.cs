@@ -16,10 +16,10 @@ namespace Markdig
         public static MarkdownPipelineBuilder UseDevOps(this MarkdownPipelineBuilder pipeline, DevOpsLinkOptions options)
         {
             return pipeline.UseDevOpsHeadings()
-                           .UseDevOpsLinks(options);
+                           .UseDevOpsWorkItems(options);
         }
 
-        public static MarkdownPipelineBuilder UseDevOpsLinks(this MarkdownPipelineBuilder pipeline, DevOpsLinkOptions options)
+        public static MarkdownPipelineBuilder UseDevOpsWorkItems(this MarkdownPipelineBuilder pipeline, DevOpsLinkOptions options)
         {
             pipeline.Extensions.AddIfNotAlready(new DevOpsWorkItemsExtension(options));
             return pipeline;
