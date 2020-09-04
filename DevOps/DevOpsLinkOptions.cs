@@ -4,7 +4,7 @@
 
 using System;
 
-namespace Markdig.Extensions.DevOps.Links
+namespace Markdig.Extensions.DevOps
 {
     public class DevOpsLinkOptions
     {
@@ -18,6 +18,5 @@ namespace Markdig.Extensions.DevOps.Links
 
         public bool OpenInNewWindow { get; set; } = true;
         public string Url { get; set; }
-        public string Class { get; set; } = "mention-workitem";
     }
 }

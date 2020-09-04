@@ -6,11 +6,13 @@ using Markdig.Helpers;
 using Markdig.Syntax.Inlines;
 using System.Diagnostics;
 
-namespace Markdig.Extensions.DevOps.Links
+namespace Markdig.Extensions.DevOps.WorkItems
 {
-    [DebuggerDisplay("#{" + nameof(IssueNumber) + "}")]
-    public class DevOpsLink : LeafInline
+    [DebuggerDisplay("{" + nameof(Prefix) + nameof(IssueNumber) + "}")]
+    public class DevOpsWorkItem : LeafInline
     {
         public StringSlice IssueNumber { get; set; }
+        public char Prefix { get; set; } = '#';
+        public string Class { get; set; } = "mention-workitem";
     }
 }

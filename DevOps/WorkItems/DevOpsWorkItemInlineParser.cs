@@ -5,19 +5,19 @@
 using Markdig.Helpers;
 using Markdig.Parsers;
 
-namespace Markdig.Extensions.DevOps.Links
+namespace Markdig.Extensions.DevOps.WorkItems
 {
     /// <summary>
     /// Inline parser for a <see cref="InlineParser"/>.
     /// </summary>
-    public class DevOpsLinkInlineParser : InlineParser
+    public class DevOpsWorkItemInlineParser : InlineParser
     {
         private static readonly char[] _openingCharacters =
         {
             '#'
         };
 
-        public DevOpsLinkInlineParser() => OpeningCharacters = _openingCharacters;
+        public DevOpsWorkItemInlineParser() => OpeningCharacters = _openingCharacters;
 
         public override bool Match(InlineProcessor processor, ref StringSlice slice)
         {
@@ -42,7 +42,7 @@ namespace Markdig.Extensions.DevOps.Links
                 {
                     int inlineStart = processor.GetSourcePosition(slice.Start, out int line, out int column);
 
-                    processor.Inline = new DevOpsLink
+                    processor.Inline = new DevOpsWorkItem
                     {
                         Span =
                         {

@@ -2,8 +2,9 @@
 // This file is licensed under the BSD-Clause 2 license. 
 // See the LICENSE file in the project root for more information.
 
+using Markdig.Extensions.DevOps;
 using Markdig.Extensions.DevOps.Headings;
-using Markdig.Extensions.DevOps.Links;
+using Markdig.Extensions.DevOps.WorkItems;
 
 namespace Markdig
 {
@@ -20,8 +21,8 @@ namespace Markdig
 
         public static MarkdownPipelineBuilder UseDevOpsLinks(this MarkdownPipelineBuilder pipeline, DevOpsLinkOptions options)
         {
-            if (!pipeline.Extensions.Contains<DevOpsLinksExtension>())
-                pipeline.Extensions.Add(new DevOpsLinksExtension(options));
+            if (!pipeline.Extensions.Contains<DevOpsWorkItemsExtension>())
+                pipeline.Extensions.Add(new DevOpsWorkItemsExtension(options));
             
             return pipeline;
         }

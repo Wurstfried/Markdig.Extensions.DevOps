@@ -4,23 +4,22 @@
 
 using Markdig.Renderers;
 
-namespace Markdig.Extensions.DevOps.Links
+namespace Markdig.Extensions.DevOps.WorkItems
 {
     /// <summary>
     /// Markdig markdown extension for DevOps work item links
     /// </summary>
-    public class DevOpsLinksExtension : IMarkdownExtension
+    public class DevOpsWorkItemsExtension : IMarkdownExtension
     {
         private readonly DevOpsLinkOptions _options;
 
-        public DevOpsLinksExtension() => _options = new DevOpsLinkOptions();
+        public DevOpsWorkItemsExtension() => _options = new DevOpsLinkOptions();
 
-        public DevOpsLinksExtension(DevOpsLinkOptions options) => _options = options;
+        public DevOpsWorkItemsExtension(DevOpsLinkOptions options) => _options = options;
 
         public void Setup(MarkdownPipelineBuilder pipeline)
         {
-            if (!pipeline.InlineParsers.Contains<DevOpsLinkInlineParser>())
-                pipeline.InlineParsers.Add(new DevOpsLinkInlineParser());
+            pipeline.InlineParsers.AddIfNotAlready<DevOpsWorkItemInlineParser>();
         }
 
         public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
@@ -29,9 +28,7 @@ namespace Markdig.Extensions.DevOps.Links
             ObjectRendererCollection renderers = htmlRenderer?.ObjectRenderers;
 
             if (renderers != null && !renderers.Contains<DevOpsLinkRenderer>())
-            {
                 renderers.Add(new DevOpsLinkRenderer(_options));
-            }
         }
     }
 }
