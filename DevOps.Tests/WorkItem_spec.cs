@@ -15,33 +15,33 @@ namespace WorkItem_spec
         public Parses() => _pipeline = new MarkdownPipelineBuilder().UseDevOpsWorkItems().Build();
 
         [Theory]
-        [InlineData("#9"    , "<a ")]
-        [InlineData("#123"  , "<a ")]
-        [InlineData("#12345", "<a ")]
-        [InlineData("#123\n", "<a ")]
-        public void WorkItems(string markdownText, string expected)
+        [InlineData("#9"    )]
+        [InlineData("#123"  )]
+        [InlineData("#12345")]
+        [InlineData("#123\n")]
+        public void WorkItems(string markdownText)
         {
-            Assert.Contains(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains("<a ", Markdown.ToHtml(markdownText, _pipeline));
         }
 
         [Theory]
-        [InlineData("#9 bla bla"  , "<a ")]
-        [InlineData("bla #123 bla", "<a ")]
-        [InlineData("bla #12345"  , "<a ")]
-        [InlineData("bla #123\n"  , "<a ")]
-        public void In_paragraphs(string markdownText, string expected)
+        [InlineData("#9 bla bla"  )]
+        [InlineData("bla #123 bla")]
+        [InlineData("bla #12345"  )]
+        [InlineData("bla #123\n"  )]
+        public void In_paragraphs(string markdownText)
         {
-            Assert.Contains(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains("<a ", Markdown.ToHtml(markdownText, _pipeline));
         }
 
         [Theory]
-        [InlineData("#Horrid heading with #1234"   , "<a ")]
-        [InlineData("# heading with #1234"         , "<a ")]
-        [InlineData("##Horrid heading with #1234\n", "<a ")]
-        [InlineData("## heading with #1234 bla\n"  , "<a ")]
-        public void In_headings(string markdownText, string expected)
+        [InlineData("#Horrid heading with #1234"   )]
+        [InlineData("# heading with #1234"         )]
+        [InlineData("##Horrid heading with #1234\n")]
+        [InlineData("## heading with #1234 bla\n"  )]
+        public void In_headings(string markdownText)
         {
-            Assert.Contains(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains("<a ", Markdown.ToHtml(markdownText, _pipeline));
         }
     }
 
@@ -52,44 +52,44 @@ namespace WorkItem_spec
         public Does_not_parse() => _pipeline = new MarkdownPipelineBuilder().UseDevOpsWorkItems().Build();
 
         [Theory]
-        [InlineData("#Horrid"          , "<a ")]
-        [InlineData("#Horrid heading"  , "<a ")]
-        [InlineData("##Horrid heading" , "<a ")]
-        [InlineData("#12Horrid heading", "<a ")]
-        [InlineData("##12Horrid"       , "<a ")]
-        public void Horrid_headings(string markdownText, string expected)
+        [InlineData("#Horrid"          )]
+        [InlineData("#Horrid heading"  )]
+        [InlineData("##Horrid heading" )]
+        [InlineData("#12Horrid heading")]
+        [InlineData("##12Horrid"       )]
+        public void Horrid_headings(string markdownText)
         {
-            Assert.DoesNotContain(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain("<a ", Markdown.ToHtml(markdownText, _pipeline));
         }
 
         [Theory]
-        [InlineData(@"\#1"             , "<a ")]
-        [InlineData(@" \#123 abc"      , "<a ")]
-        [InlineData(@"abc \#6543"      , "<a ")]
-        [InlineData(@"abc \#123 \n abc", "<a ")]
-        public void Escaped_workItems(string markdownText, string expected)
+        [InlineData(@"\#1"             )]
+        [InlineData(@" \#123 abc"      )]
+        [InlineData(@"abc \#6543"      )]
+        [InlineData(@"abc \#123 \n abc")]
+        public void Escaped_workItems(string markdownText)
         {
-            Assert.DoesNotContain(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain("<a ", Markdown.ToHtml(markdownText, _pipeline));
         }
 
         [Theory]
-        [InlineData("`#123`"    , "<a ")]
-        [InlineData("`#1` 23"   , "<a ")]
-        [InlineData("12 `#34`"  , "<a ")]
-        [InlineData("12 `34` 56", "<a ")]
-        public void In_code_inline(string markdownText, string expected)
+        [InlineData("`#123`"    )]
+        [InlineData("`#1` 23"   )]
+        [InlineData("12 `#34`"  )]
+        [InlineData("12 `34` 56")]
+        public void In_code_inline(string markdownText)
         {
-            Assert.DoesNotContain(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain("<a ", Markdown.ToHtml(markdownText, _pipeline));
         }
 
         [Theory]
-        [InlineData("```vb\n#123\n```"       , "<a ")]
-        [InlineData("```\n abc #123 def\n```", "<a ")]
-        [InlineData("```xml\nabc #123\n```"  , "<a ")]
-        [InlineData("\n``` py \n#1 bla\n``` ", "<a ")]
-        public void In_code_block(string markdownText, string expected)
+        [InlineData("```vb\n#123\n```"       )]
+        [InlineData("```\n abc #123 def\n```")]
+        [InlineData("```xml\nabc #123\n```"  )]
+        [InlineData("\n``` py \n#1 bla\n``` ")]
+        public void In_code_block(string markdownText)
         {
-            Assert.DoesNotContain(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain("<a ", Markdown.ToHtml(markdownText, _pipeline));
         }
     }
 }
