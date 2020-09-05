@@ -1,9 +1,10 @@
-﻿using Markdig.Helpers;
+﻿// Copyright (c) Sebastian Raffel. All rights reserved.
+// This file is licensed under the BSD-Clause 2 license. 
+// See the LICENSE file in the project root for more information.
+
+using Markdig.Helpers;
 using Markdig.Renderers;
 using Markdig.Renderers.Html;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Markdig.Extensions.DevOps.TOCs
 {

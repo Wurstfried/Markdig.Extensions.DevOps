@@ -4,7 +4,6 @@
 
 using Markdig.Helpers;
 using Markdig.Parsers;
-using Markdig.Syntax.Inlines;
 using System.Text.RegularExpressions;
 
 namespace Markdig.Extensions.DevOps.TOCs
@@ -23,10 +22,9 @@ namespace Markdig.Extensions.DevOps.TOCs
 
         public override bool Match(InlineProcessor processor, ref StringSlice slice)
         {
-            char previous = slice.PeekCharExtra(-1);
+            string ident = "[[_TOC_]]";
 
-
-            if (!slice.Match("[[_TOC_]]"))
+            if (!slice.Match(ident))
                 return false;
 
             // Check before TOC: Allow whitespace, # or |
@@ -40,7 +38,7 @@ namespace Markdig.Extensions.DevOps.TOCs
             if (!re.IsMatch(slice.Text.Substring(slice.Start + 9)))
                 return false;
 
-            slice.Start = slice.Start + 9;
+            slice.Start += ident.Length;
 
             int inlineStart = processor.GetSourcePosition(slice.Start, out int line, out int column);
 
@@ -49,49 +47,13 @@ namespace Markdig.Extensions.DevOps.TOCs
                 Span =
                 {
                     Start = inlineStart,
-                    End = inlineStart + 9
+                    End = inlineStart + ident.Length
                 },
                 Line = line,
                 Column = column
             };
 
             return true;
-
-
-            if (previous.IsWhiteSpaceOrZero())
-            {
-                slice.NextChar();
-
-                char current = slice.CurrentChar;
-                int start = slice.Start;
-                int end = start;
-
-                while (current.IsDigit())
-                {
-                    end = slice.Start;
-                    current = slice.NextChar();
-                }
-
-                if (current.IsWhiteSpaceOrZero())
-                {
-                    //inlineStart = processor.GetSourcePosition(slice.Start, out int line, out int column);
-
-                    //processor.Inline = new LinkInline
-                    //{
-                    //    Span =
-                    //    {
-                    //        Start = inlineStart,
-                    //        End = inlineStart + (end - start) + 1
-                    //    },
-                    //    Line = line,
-                    //    Column = column
-                    //};
-
-                    //matchFound = true;
-                }
-            }
-
-            //return matchFound;
         }
     }
 }
