@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using Markdig;
-using Markdig.Extensions.DevOps;
 using Xunit;
 
 namespace WorkItem_spec

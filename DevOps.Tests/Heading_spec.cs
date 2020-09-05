@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using Markdig;
-using Markdig.Extensions.DevOps;
 using Xunit;
 
 namespace Heading_spec
@@ -81,7 +80,7 @@ namespace Heading_spec
     {
         private readonly MarkdownPipeline _pipeline;
 
-        public Does_not_parse() => _pipeline = new MarkdownPipelineBuilder().UseDevOps().Build();
+        public Does_not_parse() => _pipeline = new MarkdownPipelineBuilder().UseDevOpsHeadings().Build();
 
         [Theory]
         [InlineData("#9"    , "<h1>")]

@@ -11,13 +11,24 @@ Recognizes Pull requests like `!123`
 > Options like url are not provided because PRs also need a repository name, which is likely ambiguous for a global option. Postprocessing required.
 
 ## Horrid headings
-Recognizes normal and horrid headings, which miss a blank between and heading. Valid headings:
+Recognizes normal and horrid headings, which miss a blank between `#` and heading. Valid headings:
 
 ```markdown
 # Regular heading
 ##Horrid heading
 ## Wrapped regular heading ##
 ##Wrapped horrid heading #
+```
+
+## Table of Contents
+Recognizes `[[_TOC_]]`
+- in a line
+- in a headline
+- in a table cell
+and renders it as 
+
+```html
+<div class="toc-container"></div>
 ```
 
 <!-- Links -->
