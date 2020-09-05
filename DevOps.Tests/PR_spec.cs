@@ -14,13 +14,13 @@ namespace PR_spec
         public Parses() => _pipeline = new MarkdownPipelineBuilder().UseDevOpsPRs().Build();
 
         [Theory]
-        [InlineData("!1"             , "<a ")]
-        [InlineData(" !23 "          , "<a ")]
-        [InlineData("abc !543\n"     , "<a ")]
-        [InlineData("*abc* !341 test", "<a ")]
-        public void PRs(string markdownText, string expected)
+        [InlineData("!1")]
+        [InlineData(" !23 ")]
+        [InlineData("abc !543\n")]
+        [InlineData("*abc* !341 test")]
+        public void PRs(string markdownText)
         {
-            Assert.Contains(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains("<a ", Markdown.ToHtml(markdownText, _pipeline));
         }
     }
 
@@ -31,23 +31,23 @@ namespace PR_spec
         public Does_not_parse() => _pipeline = new MarkdownPipelineBuilder().UseDevOpsPRs().Build();
 
         [Theory]
-        [InlineData(@"\!1", "<a ")]
-        [InlineData(@" \!123 abc", "<a ")]
-        [InlineData(@"abc \!6543", "<a ")]
-        [InlineData(@"abc \!123 \n abc", "<a ")]
-        public void Escaped_PRs(string markdownText, string expected)
+        [InlineData(@"\!1")]
+        [InlineData(@" \!123 abc")]
+        [InlineData(@"abc \!6543")]
+        [InlineData(@"abc \!123 \n abc")]
+        public void Escaped_PRs(string markdownText)
         {
-            Assert.DoesNotContain(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain("<a ", Markdown.ToHtml(markdownText, _pipeline));
         }
 
         [Theory]
-        [InlineData(@"!1a", "<a ")]
-        [InlineData(@"abc!123", "<a ")]
-        [InlineData(@"abc !6543abc", "<a ")]
-        [InlineData(@"![test]()", "<a ")]
-        public void Concatenated_PRs(string markdownText, string expected)
+        [InlineData(@"!1a")]
+        [InlineData(@"abc!123")]
+        [InlineData(@"abc !6543abc")]
+        [InlineData(@"![test]()")]
+        public void Concatenated_PRs(string markdownText)
         {
-            Assert.DoesNotContain(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain("<a ", Markdown.ToHtml(markdownText, _pipeline));
         }
     }
 }
