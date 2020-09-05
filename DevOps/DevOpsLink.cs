@@ -8,11 +8,11 @@ using System.Diagnostics;
 
 namespace Markdig.Extensions.DevOps
 {
-    [DebuggerDisplay("{" + nameof(Prefix) + nameof(IssueNumber) + "}")]
-    public class DevOpsLink : LeafInline
+    [DebuggerDisplay("{" + nameof(Prefix) + nameof(ItemNumber) + "}")]
+    public abstract class DevOpsLink : LeafInline
     {
-        public StringSlice IssueNumber { get; set; }
-        public char Prefix { get; set; } = '#';
-        public string Class { get; set; } = "mention-workitem";
+        public StringSlice ItemNumber { get; set; }
+        public char Prefix { get; set; }
+        public string Class { get; set; }
     }
 }

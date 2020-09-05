@@ -11,12 +11,6 @@ namespace Markdig.Extensions.DevOps.WorkItems
     /// </summary>
     public class DevOpsWorkItemsExtension : IMarkdownExtension
     {
-        private readonly DevOpsLinkOptions _options;
-
-        public DevOpsWorkItemsExtension() => _options = new DevOpsLinkOptions();
-
-        public DevOpsWorkItemsExtension(DevOpsLinkOptions options) => _options = options;
-
         public void Setup(MarkdownPipelineBuilder pipeline)
         {
             pipeline.InlineParsers.AddIfNotAlready<DevOpsWorkItemInlineParser>();
@@ -28,7 +22,7 @@ namespace Markdig.Extensions.DevOps.WorkItems
             ObjectRendererCollection renderers = htmlRenderer?.ObjectRenderers;
             if (renderers == null) return;
 
-            renderers.AddIfNotAlready(new DevOpsLinkRenderer(_options));
+            renderers.AddIfNotAlready(new DevOpsLinkRenderer());
         }
     }
 }

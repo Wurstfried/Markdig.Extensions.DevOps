@@ -81,7 +81,7 @@ namespace Heading_spec
     {
         private readonly MarkdownPipeline _pipeline;
 
-        public Does_not_parse() => _pipeline = new MarkdownPipelineBuilder().UseDevOps(new DevOpsLinkOptions("https://dev.azure.com/org/prj")).Build();
+        public Does_not_parse() => _pipeline = new MarkdownPipelineBuilder().UseDevOps().Build();
 
         [Theory]
         [InlineData("#9"    , "<h1>")]

@@ -8,12 +8,6 @@ namespace Markdig.Extensions.DevOps.PRs
 {
     class DevOpsPRsExtension : IMarkdownExtension
     {
-        private readonly DevOpsLinkOptions _options;
-
-        public DevOpsPRsExtension() => _options = new DevOpsLinkOptions();
-
-        public DevOpsPRsExtension(DevOpsLinkOptions options) => _options = options;
-
         public void Setup(MarkdownPipelineBuilder pipeline)
         {
             pipeline.InlineParsers.AddIfNotAlready<DevOpsPRInlineParser>();
@@ -25,7 +19,7 @@ namespace Markdig.Extensions.DevOps.PRs
             ObjectRendererCollection renderers = htmlRenderer?.ObjectRenderers;
             if (renderers == null) return;
 
-            renderers.AddIfNotAlready(new DevOpsLinkRenderer(_options));
+            renderers.AddIfNotAlready(new DevOpsLinkRenderer());
         }
     }
 }

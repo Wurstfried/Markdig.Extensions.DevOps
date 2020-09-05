@@ -42,7 +42,7 @@ namespace Markdig.Extensions.DevOps.WorkItems
                 {
                     int inlineStart = processor.GetSourcePosition(slice.Start, out int line, out int column);
 
-                    processor.Inline = new DevOpsLink
+                    processor.Inline = new DevOpsWorkItem
                     {
                         Span =
                         {
@@ -51,7 +51,7 @@ namespace Markdig.Extensions.DevOps.WorkItems
                         },
                         Line = line,
                         Column = column,
-                        IssueNumber = new StringSlice(slice.Text, start, end)
+                        ItemNumber = new StringSlice(slice.Text, start, end)
                     };
 
                     matchFound = true;

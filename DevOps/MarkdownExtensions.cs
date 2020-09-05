@@ -14,15 +14,15 @@ namespace Markdig
     /// </summary>
     public static class MarkdownExtensions
     {
-        public static MarkdownPipelineBuilder UseDevOps(this MarkdownPipelineBuilder pipeline, DevOpsLinkOptions options)
+        public static MarkdownPipelineBuilder UseDevOps(this MarkdownPipelineBuilder pipeline)
         {
             return pipeline.UseDevOpsHeadings()
-                           .UseDevOpsWorkItems(options);
+                           .UseDevOpsWorkItems();
         }
 
-        public static MarkdownPipelineBuilder UseDevOpsWorkItems(this MarkdownPipelineBuilder pipeline, DevOpsLinkOptions options)
+        public static MarkdownPipelineBuilder UseDevOpsWorkItems(this MarkdownPipelineBuilder pipeline)
         {
-            pipeline.Extensions.AddIfNotAlready(new DevOpsWorkItemsExtension(options));
+            pipeline.Extensions.AddIfNotAlready(new DevOpsWorkItemsExtension());
             return pipeline;
         }
 
