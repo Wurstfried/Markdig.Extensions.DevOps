@@ -51,5 +51,15 @@ namespace Person_spec
         {
             Assert.DoesNotContain("<span class=\"mention-person\"", Markdown.ToHtml(markdownText, _pipeline));
         }
+
+        [Theory]
+        [InlineData(@"\@<Sebastian Raffel>")]
+        [InlineData(@"\@<Gustav Mayer Gundron> \n")]
+        [InlineData(@"\@<[FirstProject]\Build Administrators>")]
+        [InlineData(@"\@<[FirstProject]\Build Administrators> \n")]
+        public void Escaped_persons(string markdownText)
+        {
+            Assert.DoesNotContain("<span class=\"mention-person\"", Markdown.ToHtml(markdownText, _pipeline));
+        }
     }
 }
