@@ -4,6 +4,7 @@
 
 using Markdig.Extensions.DevOps;
 using Markdig.Extensions.DevOps.Headings;
+using Markdig.Extensions.DevOps.Persons;
 using Markdig.Extensions.DevOps.PRs;
 using Markdig.Extensions.DevOps.TOCs;
 using Markdig.Extensions.DevOps.WorkItems;
@@ -42,6 +43,12 @@ namespace Markdig
         public static MarkdownPipelineBuilder UseDevOpsTOCs(this MarkdownPipelineBuilder pipeline)
         {
             pipeline.Extensions.AddIfNotAlready<DevOpsTOCsExtension>();
+            return pipeline;
+        }
+
+        public static MarkdownPipelineBuilder UseDevOpsPersons(this MarkdownPipelineBuilder pipeline)
+        {
+            pipeline.Extensions.AddIfNotAlready<DevOpsPersonsExtension>();
             return pipeline;
         }
     }

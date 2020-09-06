@@ -2,14 +2,14 @@
 // This file is licensed under the BSD-Clause 2 license. 
 // See the LICENSE file in the project root for more information.
 
-namespace Markdig.Extensions.DevOps.TOCs
+namespace Markdig.Extensions.DevOps.Persons
 {
-    class DevOpsTOC : DevOpsLink
+    class DevOpsPerson : DevOpsLink
     {
-        public DevOpsTOC()
+        public DevOpsPerson()
         {
-            Prefix = '[';
-            Class = "toc-container";
+            Prefix = '@';
+            Class = "mention-person";
         }
     }
 }
