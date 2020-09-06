@@ -19,9 +19,9 @@ namespace Person_spec
         [InlineData("test@<Sebastian Raffel>")]
         [InlineData("@<Sebastian Raffel>test")]
         [InlineData("test@<Sebastian Raffel>test")]
-        public void Persons(string markdownText)
+        public void Persons(string md)
         {
-            Assert.Contains("<span class=\"mention-person\"", Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains("<span class=\"mention-person\"", Markdown.ToHtml(md, _pipeline));
         }
 
         [Theory]
@@ -30,9 +30,9 @@ namespace Person_spec
         [InlineData(@"test@<[FirstProject]\Build Administrators>")]
         [InlineData(@"@<[FirstProject]\Build Administrators>test")]
         [InlineData(@"test@<[FirstProject]\Build Administrators>test")]
-        public void Groups(string markdownText)
+        public void Groups(string md)
         {
-            Assert.Contains("<span class=\"mention-person\"", Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains("<span class=\"mention-person\"", Markdown.ToHtml(md, _pipeline));
         }
     }
 
@@ -47,9 +47,9 @@ namespace Person_spec
         [InlineData("```vb\n@<Gustav Mayer Gundron> \n```")]
         [InlineData(@"`@<[FirstProject]\Build Administrators>`")]
         [InlineData("```cs\n@<[FirstProject]\\Build Administrators> \n```")]
-        public void In_code(string markdownText)
+        public void In_code(string md)
         {
-            Assert.DoesNotContain("<span class=\"mention-person\"", Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain("<span class=\"mention-person\"", Markdown.ToHtml(md, _pipeline));
         }
 
         [Theory]
@@ -57,9 +57,9 @@ namespace Person_spec
         [InlineData(@"\@<Gustav Mayer Gundron> \n")]
         [InlineData(@"\@<[FirstProject]\Build Administrators>")]
         [InlineData(@"\@<[FirstProject]\Build Administrators> \n")]
-        public void Escaped_persons(string markdownText)
+        public void Escaped_persons(string md)
         {
-            Assert.DoesNotContain("<span class=\"mention-person\"", Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain("<span class=\"mention-person\"", Markdown.ToHtml(md, _pipeline));
         }
     }
 }

@@ -18,9 +18,9 @@ namespace WorkItem_spec
         [InlineData("#123"  )]
         [InlineData("#12345")]
         [InlineData("#123\n")]
-        public void WorkItems(string markdownText)
+        public void WorkItems(string md)
         {
-            Assert.Contains("<a ", Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains("<a ", Markdown.ToHtml(md, _pipeline));
         }
 
         [Theory]
@@ -28,9 +28,9 @@ namespace WorkItem_spec
         [InlineData("bla #123 bla")]
         [InlineData("bla #12345"  )]
         [InlineData("bla #123\n"  )]
-        public void In_paragraphs(string markdownText)
+        public void In_paragraphs(string md)
         {
-            Assert.Contains("<a ", Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains("<a ", Markdown.ToHtml(md, _pipeline));
         }
 
         [Theory]
@@ -38,9 +38,9 @@ namespace WorkItem_spec
         [InlineData("# heading with #1234"         )]
         [InlineData("##Horrid heading with #1234\n")]
         [InlineData("## heading with #1234 bla\n"  )]
-        public void In_headings(string markdownText)
+        public void In_headings(string md)
         {
-            Assert.Contains("<a ", Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains("<a ", Markdown.ToHtml(md, _pipeline));
         }
     }
 
@@ -56,9 +56,9 @@ namespace WorkItem_spec
         [InlineData("##Horrid heading" )]
         [InlineData("#12Horrid heading")]
         [InlineData("##12Horrid"       )]
-        public void Horrid_headings(string markdownText)
+        public void Horrid_headings(string md)
         {
-            Assert.DoesNotContain("<a ", Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain("<a ", Markdown.ToHtml(md, _pipeline));
         }
 
         [Theory]
@@ -66,9 +66,9 @@ namespace WorkItem_spec
         [InlineData(@" \#123 abc"      )]
         [InlineData(@"abc \#6543"      )]
         [InlineData(@"abc \#123 \n abc")]
-        public void Escaped_workItems(string markdownText)
+        public void Escaped_workItems(string md)
         {
-            Assert.DoesNotContain("<a ", Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain("<a ", Markdown.ToHtml(md, _pipeline));
         }
 
         [Theory]
@@ -76,9 +76,9 @@ namespace WorkItem_spec
         [InlineData("`#1` 23"   )]
         [InlineData("12 `#34`"  )]
         [InlineData("12 `34` 56")]
-        public void In_code_inline(string markdownText)
+        public void In_code_inline(string md)
         {
-            Assert.DoesNotContain("<a ", Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain("<a ", Markdown.ToHtml(md, _pipeline));
         }
 
         [Theory]
@@ -86,9 +86,9 @@ namespace WorkItem_spec
         [InlineData("```\n abc #123 def\n```")]
         [InlineData("```xml\nabc #123\n```"  )]
         [InlineData("\n``` py \n#1 bla\n``` ")]
-        public void In_code_block(string markdownText)
+        public void In_code_block(string md)
         {
-            Assert.DoesNotContain("<a ", Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain("<a ", Markdown.ToHtml(md, _pipeline));
         }
     }
 }

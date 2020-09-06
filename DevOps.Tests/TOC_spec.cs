@@ -19,9 +19,9 @@ namespace TOC_spec
         [InlineData(" [[_TOC_]]")]
         [InlineData(" [[_TOC_]]  ")]
         [InlineData("[[_TOC_]]\n")]
-        public void TOCs(string markdownText)
+        public void TOCs(string md)
         {
-            Assert.Contains(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains(expected, Markdown.ToHtml(md, _pipeline));
         }
 
         [Theory]
@@ -29,16 +29,16 @@ namespace TOC_spec
         [InlineData("#[[_TOC_]] ")]
         [InlineData("###[[_TOC_]]")]
         [InlineData("### [[_TOC_]]\n")]
-        public void In_headings(string markdownText)
+        public void In_headings(string md)
         {
-            Assert.Contains(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains(expected, Markdown.ToHtml(md, _pipeline));
         }
 
         [Theory]
         [InlineData("| [[_TOC_]] |\n|--|")]
-        public void In_tables(string markdownText)
+        public void In_tables(string md)
         {
-            Assert.Contains(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains(expected, Markdown.ToHtml(md, _pipeline));
         }
     }
 
@@ -54,9 +54,9 @@ namespace TOC_spec
         [InlineData(" [[_TOC_]] bc")]
         [InlineData("ab[[_TOC_]]c  ")]
         [InlineData("| a [[_TOC_]]|\n|--|")]
-        public void In_concats(string markdownText)
+        public void In_concats(string md)
         {
-            Assert.DoesNotContain(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain(expected, Markdown.ToHtml(md, _pipeline));
         }
     }
 }

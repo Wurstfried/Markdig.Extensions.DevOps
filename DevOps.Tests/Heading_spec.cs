@@ -18,9 +18,9 @@ namespace Heading_spec
         [InlineData("## Title and blanks"                 , "<h2>")]
         [InlineData(" # Title "                           , "<h1>")]
         [InlineData("# Title\nBla *bla*\n## Another title", "<h1>")]
-        public void ATX_headings(string markdownText, string expected)
+        public void ATX_headings(string md, string expected)
         {
-            Assert.Contains(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains(expected, Markdown.ToHtml(md, _pipeline));
         }
 
         [Theory]
@@ -28,9 +28,9 @@ namespace Heading_spec
         [InlineData("## Title and blanks ####"               , "<h2>")]
         [InlineData(" # Title #"                             , "<h1>")]
         [InlineData("# Title ##\nBla *bla*\n## Another title", "<h1>")]
-        public void Wrapped_ATX_headings(string markdownText, string expected)
+        public void Wrapped_ATX_headings(string md, string expected)
         {
-            Assert.Contains(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains(expected, Markdown.ToHtml(md, _pipeline));
         }
 
         [Theory]
@@ -38,9 +38,9 @@ namespace Heading_spec
         [InlineData("##Title and blanks"                 , "<h2>")]
         [InlineData(" #Title"                            , "<h1>")]
         [InlineData("# Title\nBla *bla*\n##Another title", "<h2>")]
-        public void Horrid_headings(string markdownText, string expected)
+        public void Horrid_headings(string md, string expected)
         {
-            Assert.Contains(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains(expected, Markdown.ToHtml(md, _pipeline));
         }
 
         [Theory]
@@ -48,9 +48,9 @@ namespace Heading_spec
         [InlineData("##Title and blanks ####"              , "<h2>")]
         [InlineData(" #Title #"                            , "<h1>")]
         [InlineData("#Title ##\nBla *bla*\n##Another title", "<h1>")]
-        public void Wrapped_horrid_headings(string markdownText, string expected)
+        public void Wrapped_horrid_headings(string md, string expected)
         {
-            Assert.Contains(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains(expected, Markdown.ToHtml(md, _pipeline));
         }
 
         [Theory]
@@ -58,9 +58,9 @@ namespace Heading_spec
         [InlineData("##Title and blanks ####\n\n# Title"    , "<h1>", "<h2>")]
         [InlineData(" #Title\n## Title2"                    , "<h1>", "<h2>")]
         [InlineData("#Title ##\nBla *bla*\n## Another title", "<h1>", "<h2>")]
-        public void Mixed_headings(string markdownText, string expected, string expected2)
+        public void Mixed_headings(string md, string expected, string expected2)
         {
-            string html = Markdown.ToHtml(markdownText, _pipeline);
+            string html = Markdown.ToHtml(md, _pipeline);
             Assert.Contains(expected, html);
             Assert.Contains(expected2, html);
         }
@@ -87,9 +87,9 @@ namespace Heading_spec
         [InlineData("#123"  , "<h1>")]
         [InlineData("#12345", "<h1>")]
         [InlineData("#123\n", "<h1>")]
-        public void WorkItems(string markdownText, string expected)
+        public void WorkItems(string md, string expected)
         {
-            Assert.DoesNotContain(expected, Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain(expected, Markdown.ToHtml(md, _pipeline));
         }
     }
 }

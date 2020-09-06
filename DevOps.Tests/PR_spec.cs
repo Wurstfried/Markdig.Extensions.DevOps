@@ -18,9 +18,9 @@ namespace PR_spec
         [InlineData(" !23 ")]
         [InlineData("abc !543\n")]
         [InlineData("*abc* !341 test")]
-        public void PRs(string markdownText)
+        public void PRs(string md)
         {
-            Assert.Contains("<a ", Markdown.ToHtml(markdownText, _pipeline));
+            Assert.Contains("<a ", Markdown.ToHtml(md, _pipeline));
         }
     }
 
@@ -35,9 +35,9 @@ namespace PR_spec
         [InlineData(@" \!123 abc")]
         [InlineData(@"abc \!6543")]
         [InlineData(@"abc \!123 \n abc")]
-        public void Escaped_PRs(string markdownText)
+        public void Escaped_PRs(string md)
         {
-            Assert.DoesNotContain("<a ", Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain("<a ", Markdown.ToHtml(md, _pipeline));
         }
 
         [Theory]
@@ -45,9 +45,9 @@ namespace PR_spec
         [InlineData(@"abc!123")]
         [InlineData(@"abc !6543abc")]
         [InlineData(@"![test]()")]
-        public void Concatenated_PRs(string markdownText)
+        public void Concatenated_PRs(string md)
         {
-            Assert.DoesNotContain("<a ", Markdown.ToHtml(markdownText, _pipeline));
+            Assert.DoesNotContain("<a ", Markdown.ToHtml(md, _pipeline));
         }
     }
 }

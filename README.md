@@ -10,7 +10,7 @@ Recognizes Pull requests like `!123`
 > NOTE
 > Options like url are not provided because PRs also need a repository name, which is likely ambiguous for a global option. Postprocessing required.
 
-# Persons and groups
+## Persons and groups
 Recognizes a `@<Person>` or `@<[A]\Group>`
 
 ## Horrid headings
