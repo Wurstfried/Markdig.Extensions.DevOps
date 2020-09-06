@@ -1,4 +1,4 @@
-﻿// Copyright (c) Sebastian Raffel. All rights reserved.
+// Copyright (c) Sebastian Raffel. All rights reserved.
 // This file is licensed under the BSD-Clause 2 license. 
 // See the LICENSE file in the project root for more information.
 
@@ -8,6 +8,8 @@ using Markdig.Extensions.DevOps.Persons;
 using Markdig.Extensions.DevOps.PRs;
 using Markdig.Extensions.DevOps.TOCs;
 using Markdig.Extensions.DevOps.WorkItems;
+using Markdig.Parsers;
+using System.Linq;
 
 namespace Markdig
 {
@@ -18,8 +20,19 @@ namespace Markdig
     {
         public static MarkdownPipelineBuilder UseDevOps(this MarkdownPipelineBuilder pipeline)
         {
+            return pipeline.UseAdvancedExtensions()
+                           .UseDevOpsHeadings()
             return pipeline.UseDevOpsHeadings()
+                           .UseDevOpsPersons()
+                           .UseDevOpsPRs()
+                           .UseDevOpsTOCs()
                            .UseDevOpsWorkItems();
+        }
+
+        public static MarkdownPipelineBuilder UseDevOpsHeadings(this MarkdownPipelineBuilder pipeline)
+        {
+            pipeline.Extensions.AddIfNotAlready<DevOpsHeadingsExtension>();
+            return pipeline;
         }
 
         public static MarkdownPipelineBuilder UseDevOpsWorkItems(this MarkdownPipelineBuilder pipeline)
@@ -28,9 +41,9 @@ namespace Markdig
             return pipeline;
         }
 
-        public static MarkdownPipelineBuilder UseDevOpsHeadings(this MarkdownPipelineBuilder pipeline)
+        public static MarkdownPipelineBuilder UseDevOpsPersons(this MarkdownPipelineBuilder pipeline)
         {
-            pipeline.Extensions.AddIfNotAlready<DevOpsHeadingsExtension>();
+            pipeline.Extensions.AddIfNotAlready<DevOpsPersonsExtension>();
             return pipeline;
         }
 
@@ -46,10 +59,11 @@ namespace Markdig
             return pipeline;
         }
 
-        public static MarkdownPipelineBuilder UseDevOpsPersons(this MarkdownPipelineBuilder pipeline)
+        public static MarkdownPipelineBuilder UseDevOpsWorkItems(this MarkdownPipelineBuilder pipeline)
         {
-            pipeline.Extensions.AddIfNotAlready<DevOpsPersonsExtension>();
+            pipeline.Extensions.AddIfNotAlready(new DevOpsWorkItemsExtension());
             return pipeline;
         }
+
     }
 }
