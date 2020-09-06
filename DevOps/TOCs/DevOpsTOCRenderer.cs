@@ -12,7 +12,7 @@ namespace Markdig.Extensions.DevOps.TOCs
     {
         protected override void Write(HtmlRenderer renderer, DevOpsTOC link)
         {
-            StringSlice itemNumber = link.ItemNumber;
+            StringSlice itemNumber = link.Ref;
 
             if (renderer.EnableHtmlForInline)
             {

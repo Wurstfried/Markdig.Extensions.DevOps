@@ -51,7 +51,7 @@ namespace Markdig.Extensions.DevOps.PRs
                         },
                         Line = line,
                         Column = column,
-                        ItemNumber = new StringSlice(slice.Text, start, end)
+                        Ref = new StringSlice(slice.Text, start, end)
                     };
 
                     matchFound = true;

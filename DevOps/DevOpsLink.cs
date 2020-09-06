@@ -8,10 +8,10 @@ using System.Diagnostics;
 
 namespace Markdig.Extensions.DevOps
 {
-    [DebuggerDisplay("{" + nameof(Prefix) + nameof(ItemNumber) + "}")]
+    [DebuggerDisplay("{" + nameof(Prefix) + nameof(Ref) + "}")]
     public abstract class DevOpsLink : LeafInline
     {
-        public StringSlice ItemNumber { get; set; }
+        public StringSlice Ref { get; set; }
         public char Prefix { get; set; }
         public string Class { get; set; }
     }
