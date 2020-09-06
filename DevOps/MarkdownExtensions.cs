@@ -1,4 +1,4 @@
-// Copyright (c) Sebastian Raffel. All rights reserved.
+﻿// Copyright (c) Sebastian Raffel. All rights reserved.
 // This file is licensed under the BSD-Clause 2 license. 
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace Markdig
         {
             return pipeline.UseAdvancedExtensions()
                            .UseDevOpsHeadings()
-            return pipeline.UseDevOpsHeadings()
+                           .UseDevOpsMermaid()
                            .UseDevOpsPersons()
                            .UseDevOpsPRs()
                            .UseDevOpsTOCs()
@@ -35,9 +35,10 @@ namespace Markdig
             return pipeline;
         }
 
-        public static MarkdownPipelineBuilder UseDevOpsWorkItems(this MarkdownPipelineBuilder pipeline)
+        public static MarkdownPipelineBuilder UseDevOpsMermaid(this MarkdownPipelineBuilder pipeline)
         {
-            pipeline.Extensions.AddIfNotAlready(new DevOpsWorkItemsExtension());
+            var o = pipeline.BlockParsers.Find<FencedCodeBlockParser>();
+            o.OpeningCharacters = o.OpeningCharacters.Append(':').ToArray();
             return pipeline;
         }
 

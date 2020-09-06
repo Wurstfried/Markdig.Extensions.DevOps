@@ -34,5 +34,24 @@ and renders it as
 <div class="toc-container"></div>
 ```
 
+## DevOps mermaid
+Recognizes [Mermaid] blocks like
+
+```markdown
+::: mermaid
+ graph LR;
+ A[Wolfgang] --> B[Petry];
+:::
+```
+
+and converts it to
+
+``` html
+<div class="mermaid">graph LR;
+ A[Wolfgang] --> B[Petry];
+</div>
+```
+
 <!-- Links -->
 [Markdig]: https://github.com/lunet-io/markdig
+[Mermaid]: https://mermaid-js.github.io/mermaid/#/
