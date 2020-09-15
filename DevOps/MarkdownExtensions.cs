@@ -2,8 +2,8 @@
 // This file is licensed under the BSD-Clause 2 license. 
 // See the LICENSE file in the project root for more information.
 
-using Markdig.Extensions.DevOps;
 using Markdig.Extensions.DevOps.Headings;
+using Markdig.Extensions.DevOps.Images;
 using Markdig.Extensions.DevOps.Persons;
 using Markdig.Extensions.DevOps.PRs;
 using Markdig.Extensions.DevOps.TOCs;
@@ -22,6 +22,7 @@ namespace Markdig
         {
             return pipeline.UseAdvancedExtensions()
                            .UseDevOpsHeadings()
+                           .UseDevOpsImages()
                            .UseDevOpsMermaid()
                            .UseDevOpsPersons()
                            .UseDevOpsPRs()
@@ -32,6 +33,12 @@ namespace Markdig
         public static MarkdownPipelineBuilder UseDevOpsHeadings(this MarkdownPipelineBuilder pipeline)
         {
             pipeline.Extensions.AddIfNotAlready<DevOpsHeadingsExtension>();
+            return pipeline;
+        }
+
+        public static MarkdownPipelineBuilder UseDevOpsImages(this MarkdownPipelineBuilder pipeline)
+        {
+            pipeline.Extensions.AddIfNotAlready<DevOpsImagesExtension>();
             return pipeline;
         }
 
