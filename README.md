@@ -1,4 +1,4 @@
-# Markdig.Extensions.DevOps [![Build Status](https://github.com/WurstfriedIII/Markdig.Extensions.DevOps/workflows/ci/badge.svg?branch=master)](https://github.com/WurstfriedIII/Markdig.Extensions.DevOps/actions) 
+# Markdig.Extensions.DevOps [![Build Status](https://github.com/WurstfriedIII/Markdig.Extensions.DevOps/workflows/ci/badge.svg?branch=master)](https://github.com/WurstfriedIII/Markdig.Extensions.DevOps/actions) [![Coverage Status](https://coveralls.io/repos/github/Wurstfried/Markdig.Extensions.DevOps/badge.svg?branch=master)](https://coveralls.io/github/Wurstfried/Markdig.Extensions.DevOps?branch=master)
 Extension for [Markdig] to support DevOps flavoured markdown.
 
 ## DevOps IDs
