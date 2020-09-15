@@ -132,7 +132,7 @@ namespace Markdig.Extensions.DevOps.Images
                 if (TryParseInlineLink(ref text, out string url, out string title, out SourceSpan linkSpan, out SourceSpan titleSpan, out string width, out string height))
                 {
                     // Inline Link
-                    var link = new DevOpsLinkInline()
+                    var link = new DevOpsImageInline()
                     {
                         Url = HtmlHelper.Unescape(url),
                         Title = HtmlHelper.Unescape(title),
@@ -323,7 +323,7 @@ namespace Markdig.Extensions.DevOps.Images
             {
                 if (TryParseFixSize(ref text, out width, out height))
                 {
-
+                    isValid = true;
                 }
             }
 

@@ -4,6 +4,8 @@
 
 using Markdig.Parsers.Inlines;
 using Markdig.Renderers;
+using Markdig.Renderers.Html.Inlines;
+using Markdig.Renderers.Normalize;
 
 namespace Markdig.Extensions.DevOps.Images
 {
@@ -16,16 +18,11 @@ namespace Markdig.Extensions.DevOps.Images
 
         public void Setup(MarkdownPipeline pipeline, IMarkdownRenderer renderer)
         {
-            //HtmlRenderer htmlRenderer = renderer as HtmlRenderer;
-            //ObjectRendererCollection renderers = htmlRenderer?.ObjectRenderers;
-            //if (renderers == null) return;
+            HtmlRenderer htmlRenderer = renderer as HtmlRenderer;
+            ObjectRendererCollection renderers = htmlRenderer?.ObjectRenderers;
+            if (renderers == null) return;
 
-            //renderers.AddIfNotAlready(new DevOpsPersonRenderer());
-
-            //if (renderer is NormalizeRenderer normalizeRenderer && !normalizeRenderer.ObjectRenderers.Contains<NormalizeJiraLinksRenderer>())
-            //{
-            //    normalizeRenderer.ObjectRenderers.InsertBefore<LinkInlineRenderer>(new NormalizeJiraLinksRenderer());
-            //}
+            renderers.InsertBefore<LinkInlineRenderer>(new DevOpsImageInlineRenderer());
         }
     }
 }

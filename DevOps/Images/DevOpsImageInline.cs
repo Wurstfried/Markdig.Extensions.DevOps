@@ -7,7 +7,7 @@ using Markdig.Syntax.Inlines;
 
 namespace Markdig.Extensions.DevOps.Images
 {
-    class DevOpsLinkInline : LinkInline
+    public class DevOpsImageInline : LinkInline
     {
         public string Width { get; set; }
         public string Height { get; set; }
