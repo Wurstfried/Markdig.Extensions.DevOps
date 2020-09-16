@@ -22,79 +22,6 @@ namespace Markdig.Extensions.DevOps.Images
             return processor.Inline != null && TryProcessLinkOrImage(processor, ref slice);
         }
 
-        private bool ProcessLinkReference(InlineProcessor state, string label, bool isShortcut, SourceSpan labelSpan, LinkDelimiterInline parent, int endPosition)
-        {
-            if (!state.Document.TryGetLinkReferenceDefinition(label, out LinkReferenceDefinition linkRef))
-            {
-                return false;
-            }
-
-            Inline link = null;
-            // Try to use a callback directly defined on the LinkReferenceDefinition
-            if (linkRef.CreateLinkInline != null)
-            {
-                link = linkRef.CreateLinkInline(state, linkRef, parent.FirstChild);
-            }
-
-            // Create a default link if the callback was not found
-            if (link == null)
-            {
-                // Inline Link
-                link = new LinkInline()
-                {
-                    Url = HtmlHelper.Unescape(linkRef.Url),
-                    Title = HtmlHelper.Unescape(linkRef.Title),
-                    Label = label,
-                    LabelSpan = labelSpan,
-                    UrlSpan = linkRef.UrlSpan,
-                    IsImage = parent.IsImage,
-                    IsShortcut = isShortcut,
-                    Reference = linkRef,
-                    Span = new SourceSpan(parent.Span.Start, endPosition),
-                    Line = parent.Line,
-                    Column = parent.Column,
-                };
-            }
-
-            if (link is ContainerInline containerLink)
-            {
-                var child = parent.FirstChild;
-                if (child == null)
-                {
-                    child = new LiteralInline()
-                    {
-                        Content = StringSlice.Empty,
-                        IsClosed = true,
-                        // Not exact but we leave it like this
-                        Span = parent.Span,
-                        Line = parent.Line,
-                        Column = parent.Column,
-                    };
-                    containerLink.AppendChild(child);
-                }
-                else
-                {
-                    // Insert all child into the link
-                    while (child != null)
-                    {
-                        var next = child.NextSibling;
-                        child.Remove();
-                        containerLink.AppendChild(child);
-                        child = next;
-                    }
-                }
-            }
-
-            link.IsClosed = true;
-
-            // Process emphasis delimiters
-            state.PostProcessInlines(0, link, null, false);
-
-            state.Inline = link;
-
-            return true;
-        }
-
         private bool TryProcessLinkOrImage(InlineProcessor inlineState, ref StringSlice text)
         {
             LinkDelimiterInline openParent = inlineState.Inline.FirstParentOfType<LinkDelimiterInline>();
@@ -125,108 +52,48 @@ namespace Markdig.Extensions.DevOps.Images
             // compact reference link/image,
             // or shortcut reference link/image
             var parentDelimiter = openParent.Parent;
-            var savedText = text;
 
-            if (text.CurrentChar == '(')
+            if (text.CurrentChar != '(')
+                return false;
+            
+            if (TryParseInlineLink(ref text, out string url, out string title, out SourceSpan linkSpan, out SourceSpan titleSpan, out string width, out string height))
             {
-                if (TryParseInlineLink(ref text, out string url, out string title, out SourceSpan linkSpan, out SourceSpan titleSpan, out string width, out string height))
+                // Inline Link
+                var link = new DevOpsImageInline()
                 {
-                    // Inline Link
-                    var link = new DevOpsImageInline()
-                    {
-                        Url = HtmlHelper.Unescape(url),
-                        Title = HtmlHelper.Unescape(title),
-                        IsImage = openParent.IsImage,
-                        LabelSpan = openParent.LabelSpan,
-                        Width = width,
-                        Height = height,
-                        UrlSpan = inlineState.GetSourcePositionFromLocalSpan(linkSpan),
-                        TitleSpan = inlineState.GetSourcePositionFromLocalSpan(titleSpan),
-                        Span = new SourceSpan(openParent.Span.Start, inlineState.GetSourcePosition(text.Start - 1)),
-                        Line = openParent.Line,
-                        Column = openParent.Column,
-                    };
+                    Url = HtmlHelper.Unescape(url),
+                    Title = HtmlHelper.Unescape(title),
+                    IsImage = openParent.IsImage,
+                    LabelSpan = openParent.LabelSpan,
+                    Width = width,
+                    Height = height,
+                    UrlSpan = inlineState.GetSourcePositionFromLocalSpan(linkSpan),
+                    TitleSpan = inlineState.GetSourcePositionFromLocalSpan(titleSpan),
+                    Span = new SourceSpan(openParent.Span.Start, inlineState.GetSourcePosition(text.Start - 1)),
+                    Line = openParent.Line,
+                    Column = openParent.Column,
+                };
 
-                    openParent.ReplaceBy(link);
-                    // Notifies processor as we are creating an inline locally
-                    inlineState.Inline = link;
+                openParent.ReplaceBy(link);
+                // Notifies processor as we are creating an inline locally
+                inlineState.Inline = link;
 
-                    // Process emphasis delimiters
-                    inlineState.PostProcessInlines(0, link, null, false);
+                // Process emphasis delimiters
+                inlineState.PostProcessInlines(0, link, null, false);
 
-                    // If we have a link (and not an image),
-                    // we also set all [ delimiters before the opening delimiter to inactive.
-                    // (This will prevent us from getting links within links.)
-                    if (!openParent.IsImage)
-                    {
-                        MarkParentAsInactive(parentDelimiter);
-                    }
-
-                    link.IsClosed = true;
-
-                    return true;
+                // If we have a link (and not an image),
+                // we also set all [ delimiters before the opening delimiter to inactive.
+                // (This will prevent us from getting links within links.)
+                if (!openParent.IsImage)
+                {
+                    MarkParentAsInactive(parentDelimiter);
                 }
 
-                text = savedText;
+                link.IsClosed = true;
+
+                return true;
             }
-
-            var labelSpan = SourceSpan.Empty;
-            string label = null;
-            bool isLabelSpanLocal = true;
-
-            bool isShortcut = false;
-            // Handle Collapsed links
-            if (text.CurrentChar == '[')
-            {
-                if (text.PeekChar() == ']')
-                {
-                    label = openParent.Label;
-                    labelSpan = openParent.LabelSpan;
-                    isLabelSpanLocal = false;
-                    text.NextChar(); // Skip [
-                    text.NextChar(); // Skip ]
-                }
-            }
-            else
-            {
-                label = openParent.Label;
-                isShortcut = true;
-            }
-
-            if (label != null || LinkHelper.TryParseLabel(ref text, true, out label, out labelSpan))
-            {
-                if (isLabelSpanLocal)
-                {
-                    labelSpan = inlineState.GetSourcePositionFromLocalSpan(labelSpan);
-                }
-
-                if (ProcessLinkReference(inlineState, label, isShortcut, labelSpan, openParent, inlineState.GetSourcePosition(text.Start - 1)))
-                {
-                    // Remove the open parent
-                    openParent.Remove();
-                    if (!openParent.IsImage)
-                    {
-                        MarkParentAsInactive(parentDelimiter);
-                    }
-                    return true;
-                }
-                else if (text.CurrentChar != ']' && text.CurrentChar != '[')
-                {
-                    return false;
-                }
-            }
-
-            // We have a nested [ ]
-            // firstParent.Remove();
-            // The opening [ will be transformed to a literal followed by all the children of the [
-
-            var literal = new LiteralInline()
-            {
-                Span = openParent.Span,
-                Content = new StringSlice(openParent.IsImage ? "![" : "[")
-            };
-
-            inlineState.Inline = openParent.ReplaceBy(literal);
+            
             return false;
         }
 
