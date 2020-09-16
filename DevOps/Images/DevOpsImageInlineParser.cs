@@ -104,13 +104,17 @@ namespace Markdig.Extensions.DevOps.Images
 
                     c = text.CurrentChar;
                     if (c == ')')
+                    {
                         isValid = true;
+                    }
                     else if (hasWhiteSpaces)
                     {
                         c = text.CurrentChar;
                         pos = text.Start;
                         if (c == ')')
+                        {
                             isValid = true;
+                        }
                         else if (LinkHelper.TryParseTitle(ref text, out title))
                         {
                             titleSpan.Start = pos;
@@ -123,7 +127,9 @@ namespace Markdig.Extensions.DevOps.Images
                             c = text.CurrentChar;
 
                             if (c == ')')
+                            {
                                 isValid = true;
+                            }
                         }
                     }
                 }
