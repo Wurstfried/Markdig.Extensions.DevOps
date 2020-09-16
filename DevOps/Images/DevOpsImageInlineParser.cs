@@ -95,41 +95,25 @@ namespace Markdig.Extensions.DevOps.Images
                     linkSpan.Start = pos;
                     linkSpan.End = text.Start - 1;
                     if (linkSpan.End < linkSpan.Start)
-                    {
                         linkSpan = SourceSpan.Empty;
-                    }
 
                     text.TrimStart(out int spaceCount);
                     var hasWhiteSpaces = spaceCount > 0;
 
                     c = text.CurrentChar;
-                    if (c == ')')
-                    {
-                        isValid = true;
-                    }
-                    else if (hasWhiteSpaces)
+                    if (c != ')' && hasWhiteSpaces)
                     {
                         c = text.CurrentChar;
                         pos = text.Start;
-                        if (c == ')')
-                        {
-                            isValid = true;
-                        }
-                        else if (LinkHelper.TryParseTitle(ref text, out title))
+                        if (c != ')' && LinkHelper.TryParseTitle(ref text, out title))
                         {
                             titleSpan.Start = pos;
                             titleSpan.End = text.Start - 1;
                             if (titleSpan.End < titleSpan.Start)
-                            {
                                 titleSpan = SourceSpan.Empty;
-                            }
+
                             text.TrimStart();
                             c = text.CurrentChar;
-
-                            if (c == ')')
-                            {
-                                isValid = true;
-                            }
                         }
                     }
                 }
