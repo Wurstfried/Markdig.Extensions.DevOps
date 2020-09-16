@@ -45,8 +45,8 @@ namespace Heading_spec
 
         [Theory]
         [InlineData("#Title #"                             , "<h1>")]
-        [InlineData("##Title and blanks ####"              , "<h2>")]
-        [InlineData(" #Title #"                            , "<h1>")]
+        [InlineData("##Title and blanks #### "             , "<h2>")]
+        [InlineData(" #Title #  "                          , "<h1>")]
         [InlineData("#Title ##\nBla *bla*\n##Another title", "<h1>")]
         public void Wrapped_horrid_headings(string md, string expected)
         {
@@ -88,6 +88,14 @@ namespace Heading_spec
         [InlineData("#12345", "<h1>")]
         [InlineData("#123\n", "<h1>")]
         public void WorkItems(string md, string expected)
+        {
+            Assert.DoesNotContain(expected, Markdown.ToHtml(md, _pipeline));
+        }
+
+        [Theory]
+        [InlineData("```vb\n#9\n```", "<h1>")]
+        [InlineData("   #123", "<h1>")]
+        public void Headings_in_code_indent(string md, string expected)
         {
             Assert.DoesNotContain(expected, Markdown.ToHtml(md, _pipeline));
         }

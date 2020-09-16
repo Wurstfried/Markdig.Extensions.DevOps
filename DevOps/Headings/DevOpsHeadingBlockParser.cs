@@ -18,10 +18,6 @@ namespace Markdig.Extensions.DevOps.Headings
     {
         public override BlockState TryOpen(BlockProcessor processor)
         {
-            // If we are in a CodeIndent, early exit
-            if (processor.IsCodeIndent)
-                return BlockState.None;
-
             // DevOps headings
             // A DevOps heading consists of a string of characters, parsed as inline content, 
             // between an opening sequence of 1–6(configurable) unescaped # characters and an optional 
