@@ -29,16 +29,16 @@ Recognizes a `@<Person>` or `@<[A]\Group>`
 Renders fix image width and height like `[](img.png =100x200)`
 
 ```md
-![Image alt](path/to.img "Image title" =x100)
-![Image alt](path/to.img "Image title" =200x)
+![](path/to.img =x100)
+![Image alt](path/to.img=200x)
 ![Image alt](path/to.img "Image title"  =200x100 )
 ```
 
 renders as
 
 ```html
-<img src="path/to.img" alt="Image alt" title="Image title" height="100" />
-<img src="path/to.img" alt="Image alt" title="Image title" width="200" />
+<img src="path/to.img" height="100" />
+<img src="path/to.img" alt="Image alt" width="200" />
 <img src="path/to.img" alt="Image alt" title="Image title" width="200" height="100" />
 ```
 
