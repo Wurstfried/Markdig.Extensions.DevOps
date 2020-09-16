@@ -49,11 +49,6 @@ namespace Markdig.Extensions.DevOps.Images
 
             if (link.IsImage)
             {
-                if (renderer.EnableHtmlForInline)
-                {
-                    renderer.Write(" />");
-                }
-
                 if (!string.IsNullOrWhiteSpace(link.Width))
                 {
                     renderer.Write(" width=\"");
@@ -66,6 +61,11 @@ namespace Markdig.Extensions.DevOps.Images
                     renderer.Write(" height=\"");
                     renderer.WriteEscape(link.Height);
                     renderer.Write("\"");
+                }
+
+                if (renderer.EnableHtmlForInline)
+                {
+                    renderer.Write(" />");
                 }
             }
             else
