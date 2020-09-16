@@ -26,25 +26,11 @@ namespace Markdig.Extensions.DevOps.Images
         {
             LinkDelimiterInline openParent = inlineState.Inline.FirstParentOfType<LinkDelimiterInline>();
 
-            if (openParent is null || !openParent.IsImage)
+            if (openParent is null
+                || !openParent.IsImage
+                || !openParent.IsActive
+                || text.CurrentChar != '(')
                 return false;
-            
-
-            // If we do find one, but it’s not active,
-            // we remove the inactive delimiter from the stack,
-            // and return a literal text node ].
-            if (!openParent.IsActive)
-            {
-                inlineState.Inline = new LiteralInline()
-                {
-                    Content = new StringSlice("["),
-                    Span = openParent.Span,
-                    Line = openParent.Line,
-                    Column = openParent.Column,
-                };
-                openParent.ReplaceBy(inlineState.Inline);
-                return false;
-            }
 
             // If we find one and it’s active,
             // then we parse ahead to see if we have
