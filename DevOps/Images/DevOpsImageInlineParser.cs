@@ -32,16 +32,6 @@ namespace Markdig.Extensions.DevOps.Images
                 || text.CurrentChar != '(')
                 return false;
 
-            // If we find one and it’s active,
-            // then we parse ahead to see if we have
-            // an inline link/image, reference link/image,
-            // compact reference link/image,
-            // or shortcut reference link/image
-            var parentDelimiter = openParent.Parent;
-
-            if (text.CurrentChar != '(')
-                return false;
-            
             if (TryParseInlineLink(ref text, out string url, out string title, out SourceSpan linkSpan, out SourceSpan titleSpan, out string width, out string height))
             {
                 // Inline Link
@@ -114,17 +104,13 @@ namespace Markdig.Extensions.DevOps.Images
 
                     c = text.CurrentChar;
                     if (c == ')')
-                    {
                         isValid = true;
-                    }
                     else if (hasWhiteSpaces)
                     {
                         c = text.CurrentChar;
                         pos = text.Start;
                         if (c == ')')
-                        {
                             isValid = true;
-                        }
                         else if (LinkHelper.TryParseTitle(ref text, out title))
                         {
                             titleSpan.Start = pos;
@@ -137,9 +123,7 @@ namespace Markdig.Extensions.DevOps.Images
                             c = text.CurrentChar;
 
                             if (c == ')')
-                            {
                                 isValid = true;
-                            }
                         }
                     }
                 }
