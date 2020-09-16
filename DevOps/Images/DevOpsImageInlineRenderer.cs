@@ -4,7 +4,6 @@
 
 using Markdig.Renderers;
 using Markdig.Renderers.Html;
-using System;
 
 namespace Markdig.Extensions.DevOps.Images
 {
@@ -17,6 +16,9 @@ namespace Markdig.Extensions.DevOps.Images
 
         protected override void Write(HtmlRenderer renderer, DevOpsImageInline link)
         {
+            if (!link.IsImage)
+                return;
+
             if (renderer.EnableHtmlForInline)
             {
                 renderer.Write(link.IsImage ? "<img src=\"" : "<a href=\"");
@@ -24,20 +26,18 @@ namespace Markdig.Extensions.DevOps.Images
                 renderer.Write("\"");
                 renderer.WriteAttributes(link);
             }
-            if (link.IsImage)
+
+            if (renderer.EnableHtmlForInline)
             {
-                if (renderer.EnableHtmlForInline)
-                {
-                    renderer.Write(" alt=\"");
-                }
-                var wasEnableHtmlForInline = renderer.EnableHtmlForInline;
-                renderer.EnableHtmlForInline = false;
-                renderer.WriteChildren(link);
-                renderer.EnableHtmlForInline = wasEnableHtmlForInline;
-                if (renderer.EnableHtmlForInline)
-                {
-                    renderer.Write("\"");
-                }
+                renderer.Write(" alt=\"");
+            }
+            var wasEnableHtmlForInline = renderer.EnableHtmlForInline;
+            renderer.EnableHtmlForInline = false;
+            renderer.WriteChildren(link);
+            renderer.EnableHtmlForInline = wasEnableHtmlForInline;
+            if (renderer.EnableHtmlForInline)
+            {
+                renderer.Write("\"");
             }
 
             if (renderer.EnableHtmlForInline && !string.IsNullOrEmpty(link.Title))
@@ -47,42 +47,23 @@ namespace Markdig.Extensions.DevOps.Images
                 renderer.Write("\"");
             }
 
-            if (link.IsImage)
+            if (!string.IsNullOrWhiteSpace(link.Width))
             {
-                if (!string.IsNullOrWhiteSpace(link.Width))
-                {
-                    renderer.Write(" width=\"");
-                    renderer.WriteEscape(link.Width);
-                    renderer.Write("\"");
-                }
-
-                if (!string.IsNullOrWhiteSpace(link.Height))
-                {
-                    renderer.Write(" height=\"");
-                    renderer.WriteEscape(link.Height);
-                    renderer.Write("\"");
-                }
-
-                if (renderer.EnableHtmlForInline)
-                {
-                    renderer.Write(" />");
-                }
+                renderer.Write(" width=\"");
+                renderer.WriteEscape(link.Width);
+                renderer.Write("\"");
             }
-            else
+
+            if (!string.IsNullOrWhiteSpace(link.Height))
             {
-                if (renderer.EnableHtmlForInline)
-                {
-                    if (!string.IsNullOrWhiteSpace(Rel))
-                    {
-                        renderer.Write($" rel=\"{Rel}\"");
-                    }
-                    renderer.Write(">");
-                }
-                renderer.WriteChildren(link);
-                if (renderer.EnableHtmlForInline)
-                {
-                    renderer.Write("</a>");
-                }
+                renderer.Write(" height=\"");
+                renderer.WriteEscape(link.Height);
+                renderer.Write("\"");
+            }
+
+            if (renderer.EnableHtmlForInline)
+            {
+                renderer.Write(" />");
             }
         }
     }

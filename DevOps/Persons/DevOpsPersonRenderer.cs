@@ -2,7 +2,6 @@
 // This file is licensed under the BSD-Clause 2 license. 
 // See the LICENSE file in the project root for more information.
 
-using Markdig.Helpers;
 using Markdig.Renderers;
 using Markdig.Renderers.Html;
 
@@ -19,7 +18,7 @@ namespace Markdig.Extensions.DevOps.Persons
             }
             else
             {
-                renderer.Write('#').Write(person.Ref);
+                renderer.Write(person.Prefix).Write(person.Ref);
             }
         }
     }
