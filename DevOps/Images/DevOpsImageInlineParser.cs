@@ -81,38 +81,12 @@ namespace Markdig.Extensions.DevOps.Images
                 // Process emphasis delimiters
                 inlineState.PostProcessInlines(0, link, null, false);
 
-                // If we have a link (and not an image),
-                // we also set all [ delimiters before the opening delimiter to inactive.
-                // (This will prevent us from getting links within links.)
-                if (!openParent.IsImage)
-                {
-                    MarkParentAsInactive(parentDelimiter);
-                }
-
                 link.IsClosed = true;
 
                 return true;
             }
             
             return false;
-        }
-
-        private void MarkParentAsInactive(Inline inline)
-        {
-            while (inline != null)
-            {
-                if (inline is LinkDelimiterInline linkInline)
-                {
-                    if (linkInline.IsImage)
-                    {
-                        break;
-                    }
-
-                    linkInline.IsActive = false;
-                }
-
-                inline = inline.Parent;
-            }
         }
 
         public static bool TryParseInlineLink(ref StringSlice text, out string link, out string title, out SourceSpan linkSpan, out SourceSpan titleSpan, out string width, out string height)
