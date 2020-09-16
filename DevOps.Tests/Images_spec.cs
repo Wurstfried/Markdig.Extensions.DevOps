@@ -55,6 +55,13 @@ namespace Images_spec
         }
 
         [Theory]
+        [InlineData("![Image alt](path/to.img \"Image title\" =100x50x20)")]
+        public void Multiple_x(string md)
+        {
+            Assert.DoesNotContain("<img", Markdown.ToHtml(md, _pipeline));
+        }
+
+        [Theory]
         [InlineData("![Image alt](path/to.img \"Image title\" = x100)")]
         [InlineData("![Image alt](path/to.img \"Image title\"  =100 x 20  )")]
         [InlineData("![Image alt](path/to.img \"Image title\"  =100 x20  )")]
