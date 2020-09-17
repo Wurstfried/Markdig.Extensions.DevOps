@@ -17,9 +17,8 @@ namespace Markdig.Extensions.DevOps.Persons
         {
             HtmlRenderer htmlRenderer = renderer as HtmlRenderer;
             ObjectRendererCollection renderers = htmlRenderer?.ObjectRenderers;
-            if (renderers == null) return;
-
-            renderers.AddIfNotAlready(new DevOpsPersonRenderer());
+            if (renderers != null)
+                renderers.AddIfNotAlready(new DevOpsPersonRenderer());
         }
     }
 }

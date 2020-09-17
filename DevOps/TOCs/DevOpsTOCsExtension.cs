@@ -20,9 +20,8 @@ namespace Markdig.Extensions.DevOps.TOCs
         {
             HtmlRenderer htmlRenderer = renderer as HtmlRenderer;
             ObjectRendererCollection renderers = htmlRenderer?.ObjectRenderers;
-            if (renderers == null) return;
-
-            renderers.AddIfNotAlready(new DevOpsTOCRenderer());
+            if (renderers != null)
+                renderers.AddIfNotAlready(new DevOpsTOCRenderer());
         }
     }
 }

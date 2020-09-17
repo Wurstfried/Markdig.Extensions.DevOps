@@ -20,9 +20,8 @@ namespace Markdig.Extensions.DevOps.Images
         {
             HtmlRenderer htmlRenderer = renderer as HtmlRenderer;
             ObjectRendererCollection renderers = htmlRenderer?.ObjectRenderers;
-            if (renderers == null) return;
-
-            renderers.InsertBefore<LinkInlineRenderer>(new DevOpsImageInlineRenderer());
+            if (renderers != null)
+                renderers.InsertBefore<LinkInlineRenderer>(new DevOpsImageInlineRenderer());
         }
     }
 }

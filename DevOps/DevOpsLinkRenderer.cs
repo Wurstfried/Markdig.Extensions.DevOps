@@ -22,7 +22,7 @@ namespace Markdig.Extensions.DevOps
             }
             else
             {
-                renderer.Write('#').Write(itemNumber);
+                renderer.Write(link.Prefix).Write(itemNumber);
             }
         }
     }
